@@ -7,10 +7,10 @@ class Solution {
         
         auto left = solve(root->left);
         auto right = solve(root->right);
-        int mid = left.second + right.second + 1;
+        int midDiameter = left.second + right.second + 1;
         
         int height = 1 + max(left.second, right.second);
-        int diameter = max(left.first, max(right.first, mid));
+        int diameter = max(left.first, max(right.first, midDiameter));
         
         return make_pair(diameter, height);
     }
