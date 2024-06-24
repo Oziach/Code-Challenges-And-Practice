@@ -27,3 +27,30 @@ class Solution
         
     }
 };
+
+//another
+class Solution
+{
+    private:
+    bool sumTree = true;
+    
+    int solve(Node* root){
+        if(!root) return 0;
+        if(!root->left && !root->right) return root->data;
+        if(!sumTree) return 0;
+        
+        int leftSum = solve(root->left);
+        int rightSum = solve(root->right);
+        if(root->data != leftSum + rightSum) sumTree = false;
+        
+        return leftSum + rightSum + root->data;
+        
+    }
+    
+    public:
+    bool isSumTree(Node* root)
+    {
+         solve(root);
+         return sumTree;
+    }
+};
