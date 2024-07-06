@@ -93,6 +93,15 @@ class heap{
         }
  }
 
+ void heapSort(int arr[], int n){
+    int s = n;
+    while(s > 1){
+        swap(arr[s], arr[1]);
+        s--;
+        heapify(arr, s, 1);
+    }
+ }
+
 int main()
 {   
     heap h;
@@ -113,5 +122,14 @@ int main()
     for(int i = 1; i < n; i++){
         cout << arr[i] << " ";
     }
+    cout << endl;
+
+    //heapsort
+    heapSort(arr, n);
+       //pritn array
+    for(int i = 1; i < n; i++){
+        cout << arr[i] << " ";
+    }
     return 0;
 }
+
