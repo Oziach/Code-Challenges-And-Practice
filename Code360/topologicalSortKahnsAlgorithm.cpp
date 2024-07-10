@@ -1,44 +1,54 @@
 #include <bits/stdc++.h> 
 
-void CreateAdjList(unordered_map<int, vector<int>>& m, vector<vector<int>>& edges){
+void CreateAdjList(unordered_map<int, vector<int>>& m, vector<vector<int>>& edges, vector<int>& inorder){
     for(vector<int> edge : edges){
         int u = edge[0];
         int v = edge[1];
 
         m[u].push_back(v);
+        inorder[v]++;
     }
 }
 
-void DFS( unordered_map<int, vector<int>>& adj, vector<bool>& visited, stack<int>& ansStack, int node){
-    
-    visited[node] = true;
+void BFS( unordered_map<int, vector<int>>& adj, vector<bool>& visited, vector<int>& inorder, vector<int>& ans, int n){
 
-    for(int i : adj[node]){
-        if(visited[i]){continue;}
-        DFS(adj, visited, ansStack, i);
+ 
+    queue<int> q;
+    
+    for(int i = 0; i < n; i++){
+        if(inorder[i] == 0){ //indegree*****
+            q.push(i);
+        }
     }
 
-    ansStack.push(node);
+    while(!q.empty()){
+        int front = q.front();
+        q.pop();
+        ans.push_back(front);
+
+        for(int nb : adj[front]){
+
+            inorder[nb]--;
+            if(inorder[nb] == 0){
+                q.push(nb);
+            }
+            
+        }
+
+    }
+
 }
 
 vector<int> topologicalSort(vector<vector<int>> &edges, int n, int e)  {
+    vector<int> inorder(n, 0);
 
     unordered_map<int, vector<int>> adj;
-    CreateAdjList(adj, edges);
-    vector<bool> visited(n, false);
+    CreateAdjList(adj, edges, inorder);
+    
     vector<int> ans;
-    stack<int> ansStack;
 
-    for(int i = 0; i < n; i++){
-        if(visited[i]){continue;}
+    //visited map not necessary in kahn's algo
+    BFS(adj, visited, inorder, ans, n);
 
-        //else
-        DFS(adj, visited, ansStack, i);
-    }
-
-    while(!ansStack.empty()){
-        ans.push_back(ansStack.top());
-        ansStack.pop();
-    }
     return ans;
 }
