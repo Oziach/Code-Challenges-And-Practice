@@ -20,10 +20,8 @@ public:
     bool IsPartable(int N, int arr[], int sum1, int& targetSum, int index, vector<vector<int>>& dp){
         
         if(sum1 > targetSum){return false;}
-        if(index >= N){
-            if(sum1 == targetSum){return true;}
-            return false;
-        }
+        if(sum1 == targetSum){return true;}
+        if(index >= N) {return false;}
         
         if(dp[index][sum1] != -1){
             return dp[index][sum1];
