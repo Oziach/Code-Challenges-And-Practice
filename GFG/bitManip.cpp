@@ -6,13 +6,7 @@ class Solution {
         int setNum = num | (1 << i-1);
         cout << setNum << " ";
         
-        int clearNum = INT_MAX << 1;
-        for(int index = 0; index < i-1; index++){
-                clearNum = clearNum << 1;
-                clearNum = clearNum | 1;
-        }
-        clearNum = clearNum & num;
-        
+        int clearNum = num & (~(1 << i-1));
         cout << clearNum;
     }
 };
