@@ -84,3 +84,35 @@ public:
         return GetLongestTab(text1, text2);
     }
 };
+
+
+
+///////////space optimizaed solution:
+int longestCommonSubsequence(string text1, string text2) {
+
+        vector<int> curr(text2.length()+1, 0);
+        vector<int> next(text2.length()+1, 0);
+
+        for(int index1 = text1.length()-1; index1 >= 0; index1--){
+            for(int index2 = text2.length()-1; index2 >= 0; index2--){
+
+                if(text1[index1] == text2[index2]){
+                    curr[index2] = 1 + next[index2+1];
+                    continue;
+                }
+
+                int longest = 0;
+  
+                longest = next[index2]; 
+
+                longest = max(longest, curr[index2+1]);
+
+                curr[index2] = longest;
+ 
+            }
+            
+            next = curr;
+        }
+
+        return curr[0];
+    }
