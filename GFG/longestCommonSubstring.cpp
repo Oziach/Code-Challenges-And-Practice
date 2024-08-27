@@ -32,4 +32,35 @@ class Solution {
         Longest(str1, str2, 0, 0, longest, dp);
         return longest;
     }
+
+    //////////space optimized:
+    class Solution2 {
+  public:
+    int longestCommonSubstr(string str1, string str2) {
+        int n = str1.length();
+        int m = str2.length();
+        
+        vector<int> prev(m+1, 0);
+        vector<int> curr(m+1, 0);
+        
+        int longest = 0;
+        
+        for(int i = 1; i <= n; i++){
+            for(int j = 1; j <= m; j++){
+                
+                if(str1[i-1] == str2[j-1]){
+                    curr[j] = 1 + prev[j-1];
+                    longest = max(longest, curr[j]);
+                }
+                else{
+                    curr[j] = 0;                    
+                }
+            }
+            
+            prev = curr;
+        }
+        
+        return longest;
+    }
+};
 };
